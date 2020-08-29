@@ -73,7 +73,6 @@ async function getAccountTransactions(access_token){
     let transactions = await acc_response.json();
     item["transactions"] = [];
     for (var transaction of transactions["transactions"]){
-      //var toadd = ;
       item["transactions"].push(JSON.stringify({"label":transaction["label"], "amount":transaction["amount"], "currency":transaction["currency"]}));
     }
     result.push(item);
