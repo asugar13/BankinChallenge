@@ -73,7 +73,7 @@ async function getAccountTransactions(access_token){
     let transactions = await acc_response.json();
     item["transactions"] = [];
     for (var transaction of transactions["transactions"]){
-      item["transactions"].push(JSON.stringify({"label":transaction["label"], "amount":transaction["amount"], "currency":transaction["currency"]}));
+      item["transactions"].push({"label":transaction["label"], "amount":transaction["amount"], "currency":transaction["currency"]});
     }
     result.push(item);
   }
@@ -84,7 +84,7 @@ async function main() {
   const refresh_token = await getRefreshToken();
   const access_token = await getAccessToken(refresh_token["refresh_token"]);
   const account_transactions = await getAccountTransactions(access_token["access_token"]);
-  console.log(account_transactions);
+  console.log(JSON.stringify(account_transactions, null, "\t"));
   return account_transactions;
 }
 
