@@ -1,0 +1,16 @@
+{
+  "name": "result",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "jquery": "^3.5.1",
+    "node-fetch": "^2.6.0"
+  }
+}
