@@ -37,8 +37,8 @@ async function getRefreshToken() {
     body: JSON.stringify(data),
     method:"POST"
   };
-  var response = await fetch(url, otherParam)//.then(res=> res.json())//.then(res=>{refresh_token = res});
-  var refresh_token = await response.json()
+  var response = await fetch(url, otherParam);
+  var refresh_token = await response.json();
   return refresh_token;
 
 }
@@ -47,7 +47,6 @@ async function getAccessToken(refresh_token){
   const url = "http://localhost:3000/token";
 
   var myHeaders = new Headers();
-  //myHeaders.set('Authorization', 'Basic ' + Buffer.from(username+":"+password).toString('base64'));
   myHeaders.set('content-type', "application/x-www-form-urlencoded");
   var data = "grant_type=refresh_token&refresh_token=" + refresh_token;
   const otherParam = {
@@ -55,8 +54,8 @@ async function getAccessToken(refresh_token){
     body: data,
     method:"POST"
   };
-  var response = await fetch(url, otherParam)//.then(res=> res.json())//.then(res=>{refresh_token = res});
-  var access_token = await response.json()
+  var response = await fetch(url, otherParam);
+  var access_token = await response.json();
   return access_token;
 }
 
@@ -69,7 +68,7 @@ async function getAccountTransactions(access_token){
     headers:myHeaders,
     method:"GET"
   };
-  var response = await fetch(url, otherParam)//.then(res=> res.json())//.then(res=>{refresh_token = res});
+  var response = await fetch(url, otherParam);
   var accounts = await response.json()
 
   var result = [];
@@ -87,8 +86,6 @@ async function getAccountTransactions(access_token){
     }
     result.push(item);
   }
-
-
   return result;
 }
 
@@ -99,6 +96,5 @@ async function main() {
   console.log(account_transactions);
   return account_transactions;
 }
-
 
 main();
