@@ -84,7 +84,7 @@ async function main() {
   const refresh_token = await getRefreshToken();
   const access_token = await getAccessToken(refresh_token["refresh_token"]);
   const account_transactions = await getAccountTransactions(access_token["access_token"]);
-  console.log(JSON.stringify(account_transactions, null, "\t"));
+  console.log(JSON.stringify(account_transactions, null, 4));
   return account_transactions;
 }
 
