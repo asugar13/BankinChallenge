@@ -33,7 +33,7 @@ async function fetchTransactions(fromDate, authorization, jws = null, id, page, 
         "Accept": "application/json",
       }
     }//headers object should be defined outside of conditional statement and without jws field
-		//the jws field can be added after once we check if it exists
+		//the jws field can be added after, once we check if it exists. less lines of code
 
 	  var {code, response } = await doRequest('GET',
       domain + '/accounts/'+ id + '/transactions?' + `page=${page}`,
@@ -45,10 +45,9 @@ async function fetchTransactions(fromDate, authorization, jws = null, id, page, 
         if (response.data.meta.hasPageSuivante) {
           let mouvements = response.data.Mouvements;
           var date = mouvements[mouvements.length -1].dateValeur;
-          if (date <= fromDate) { //again, confusing variable name. use currentDate and untilDate/finalDate
+          if (date <= fromDate) { //again, confusing variable name. use currentDate and untilDate/finalDate and condition should be >
             console.log("FromDate is Reached - we don't need more transaction");//transaction(s)
           } else {
-            // if we have mouvements
             if (mouvements) { //we know we have this since date comes from mouvements...redundant
               if (assertTransactions(mouvements)) {
                 return []; //this should console.log what's on line 56
@@ -58,19 +57,19 @@ async function fetchTransactions(fromDate, authorization, jws = null, id, page, 
             } else {
               throw new Error("Empty list of transactions ! " + JSON.stringify(previousTransactions)); //this should be inside previous conditional scope
             }
-            let nextPagesTransactions = fetchTransactions(fromDate, authorization, (jws || null), id, page + 1, mouvements);
+            let nextPagesTransactions = fetchTransactions(fromDate, authorization, (jws || null), id, page + 1, mouvements); //jws||null is a boolean value!
             response.data.Mouvements = mouvements.concat(nextPagesTransactions);
           }
         }
       }
       return response.data.Mouvements; //this should return the recursive call...
-    } else throw new Error(); //this is never executed because of the return statement on previous line
+    } else throw new Error(); //this should print an error message
 
     return []; //should delete this. no point on returning empty array here.
 	} catch (err) {
 		throw new CustomError({
       function: 'fetchTransactions',
-			statusCode: 'CRASH',
+			statusCode: 'CRASH', //this should return a number
 			rawError: e, //should be err instead
 		});
 	}
